@@ -108,3 +108,22 @@ def plot_macd(data, ticker='Stock', save_path='reports/macd_plot.png'):
     plt.savefig(save_path)
     plt.close()
     print(f"Saved MACD plot to {save_path}")
+
+
+def calculate_daily_returns(data):
+       
+    # Calculate daily stock returns.
+       
+    if data is None or 'Close' not in data:
+        print("No valid data for returns")
+        return None
+
+        
+    # Daily returns = (Close[t] - Close[t-1]) / Close[t-1]
+    data['Daily_Return'] = data['Close'].pct_change()
+        
+    # Reset index to make date a column        
+    data = data.reset_index()
+    data['Date'] = pd.to_datetime(data['Date']).dt.date
+    print("Calculated daily returns")
+    return data[['Date', 'Daily_Return']]
