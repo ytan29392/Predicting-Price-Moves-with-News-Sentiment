@@ -2,20 +2,25 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from textblob import TextBlob
+# from textblob import TextBlob
 
+    
+def load_stock_data(ticker, data_dir='data'):
+    import yfinance as yf
+    import os
+    import pandas as pd
 
-def load_news_data(file_path):
-    # Load dataset.
+    file_path = os.path.join(data_dir, f'{ticker}.csv')
+
     try:
-        df = pd.read_csv(file_path)
-        print(f"Loaded news data from {file_path}")
-        return df
+        data = yf.download(ticker, auto_adjust=True)
+        data.to_csv(file_path)
+        return data
     except Exception as e:
-        print(f"Error loading news data: {e}")
+        print(f"Error loading {ticker} data: {e}")
         return None
 
-
+from textblob import TextBlob
 def calculate_sentiment(df):
 
     # Calculate sentiment scores for headlines using TextBlob.
