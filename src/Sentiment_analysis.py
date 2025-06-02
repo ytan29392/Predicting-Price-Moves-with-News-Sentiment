@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-# from textblob import TextBlob
+from textblob import TextBlob
 
     
 def load_stock_data(ticker, data_dir='data'):
